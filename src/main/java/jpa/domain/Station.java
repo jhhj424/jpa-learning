@@ -1,9 +1,6 @@
 package jpa.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,8 +10,8 @@ import java.util.Objects;
 public class Station extends BaseEntity{
     @Column(unique = true)
     private String name;
-    @ManyToMany
-    private List<Line> lines = new ArrayList<>();
+    @OneToMany(mappedBy = "station")
+    private List<LineStation> lineStations = new ArrayList<>();
 
     protected Station() {}
 
@@ -22,30 +19,16 @@ public class Station extends BaseEntity{
         this.name = name;
     }
 
-    public Station(String name, List<Line> lines) {
+    public Station(String name, List<LineStation> lineStations) {
         this.name = name;
-        this.lines = lines;
+        this.lineStations = lineStations;
     }
 
     public String getName() {
         return name;
     }
 
-    public List<Line> getLines() {
-        return lines;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Station station = (Station) o;
-        return Objects.equals(name, station.name) &&
-                Objects.equals(lines, station.lines);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, lines);
+    public List<LineStation> getLineStations() {
+        return lineStations;
     }
 }

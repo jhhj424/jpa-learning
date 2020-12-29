@@ -1,9 +1,6 @@
 package jpa.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +10,8 @@ public class Line extends BaseEntity {
     @Column(unique = true)
     private String name;
     private String color;
-    @ManyToMany
-    private List<Station> stations = new ArrayList<>();
+    @OneToMany(mappedBy = "line")
+    private List<LineStation> lineStations = new ArrayList<>();
 
     protected Line() {}
 
@@ -23,10 +20,10 @@ public class Line extends BaseEntity {
         this.color = color;
     }
 
-    public Line(String name, String color, List<Station> stations) {
+    public Line(String name, String color, List<LineStation> lineStations) {
         this.name = name;
         this.color = color;
-        this.stations = stations;
+        this.lineStations = lineStations;
     }
 
     public String getName() {
@@ -37,7 +34,7 @@ public class Line extends BaseEntity {
         return color;
     }
 
-    public List<Station> getStations() {
-        return stations;
+    public List<LineStation> getLineStations() {
+        return lineStations;
     }
 }
